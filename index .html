@@ -1,0 +1,227 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Envelope</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Georgia", serif;
+}
+
+body {
+  height: 100vh;
+  background: #f4b6b6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Envelope */
+.envelope {
+  position: relative;
+  width: 340px;
+  height: 230px;
+  cursor: pointer;
+  overflow: visible;
+}
+
+/* Envelope back */
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: #f8f8f8;
+  border-radius: 6px;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.25);
+  z-index: 1;
+}
+
+/* Letter base */
+.letter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 26px;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.15);
+  transition: top 0.9s ease;
+}
+
+/* First letter */
+.letter1 {
+  width: 290px;
+  height: 200px;
+  top: 28px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Second letter */
+.letter2 {
+  width: 270px;
+  height: 180px;
+  top: 40px;
+  z-index: 2;
+}
+
+/* Text */
+.letter h2 {
+  font-size: 19px;
+  margin-bottom: 12px;
+}
+
+.letter p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Envelope front */
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Flaps */
+.flap-left {
+  position: absolute;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: #efefef;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.flap-right {
+  position: absolute;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: #ededed;
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+}
+
+.flap-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60%;
+  background: #e6e6e6;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+
+.flap-top {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: #f9f9f9;
+  clip-path: polygon(0 0, 50% 60%, 100% 0);
+  transform-origin: top;
+  transition: transform 0.9s ease;
+  z-index: 6;
+}
+
+/* Heart */
+.heart {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  color: #e25555;
+  z-index: 7;
+  transition: opacity 0.3s;
+}
+
+/* STATES */
+.envelope.open .flap-top {
+  transform: rotateX(180deg);
+}
+
+.envelope.step1 .letter1 {
+  top: -230px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.envelope.step2 .letter1 {
+  top: -460px;
+}
+
+.envelope.step2 .letter2 {
+  top: -200px;
+  z-index: 9;
+}
+
+.envelope.open .heart {
+  opacity: 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="envelope" id="envelope">
+
+  <div class="envelope-back"></div>
+
+  <!-- First Letter -->
+  <div class="letter letter1" id="letter1">
+    <h2>Happy Valentine's Day 💝</h2>
+    <p>
+      Even the smallest things remind me of you.<br><br>
+      Tap this letter for the next one ❤️
+    </p>
+  </div>
+
+  <!-- Second Letter -->
+  <div class="letter letter2">
+    <h2>One More Letter…</h2>
+    <p>
+      Thank you for being my peace,<br>
+      my laughter, my home.<br><br>
+      I love you 💖
+    </p>
+  </div>
+
+  <div class="envelope-front">
+    <div class="flap-left"></div>
+    <div class="flap-right"></div>
+    <div class="flap-bottom"></div>
+    <div class="flap-top"></div>
+  </div>
+
+  <div class="heart">❤</div>
+
+</div>
+
+<script>
+let step = 0;
+const envelope = document.getElementById("envelope");
+const letter1 = document.getElementById("letter1");
+
+envelope.addEventListener("click", () => {
+  if (step === 0) {
+    step = 1;
+    envelope.classList.add("open", "step1");
+  }
+});
+
+letter1.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (step === 1) {
+    step = 2;
+    envelope.classList.add("step2");
+  }
+});
+</script>
+
+</body>
+</html>
